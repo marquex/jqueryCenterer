@@ -12,7 +12,7 @@ The use is very simple. Having the following HTML
 
 You can have your image centered in #container using this javascript
 ```javascript
-$jQuery('#container').centerer();
+jQuery('#container').centerer();
 ```
 
 
