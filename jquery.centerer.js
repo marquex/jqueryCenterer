@@ -1,38 +1,23 @@
+/*
+ * jQuery plugin that makes easy centering a HTML element relative to a container.
+ * Copyright (c) 2013 Javier Marquez
+ * http://arqex.com
+ * 
+ * Licensed under GPL2 license:
+ * 	 http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @author Javier Marquez (javi@arqex.com)
+ * @version 0.1
+ * 	 
+ * @class centerer
+ * @name jQueryCenterer
+ * @chainable 
+ * @param  {Object} options Initialization parameters for jQuery centerer.
+ * @return {jQuery}         
+ */
+
 ;(function($){	
-	
-	/**
-     * jQuery definition to anchor JsDoc comments.
-     *  
-     * @see http://jquery.com/
-     * @name jQuery
-     * @class jQuery Library
-     */
-    /**
-     * jQuery 'fn' definition to anchor JsDoc comments.
-     *  
-     * 
-     * @see http://jquery.com/
-     * @name fn
-     * @class jQuery Library
-     * @memberOf jQuery
-     */
-    /**
-	 * jQuery plugin that makes easy centering a HTML element relative to a container.
-	 * Copyright (c) 2013 Javier Marquez
-	 * http://arqex.com
-	 * 
-	 * Licensed under GPL2 license:
-	 * 	 http://www.gnu.org/licenses/gpl-2.0.html
-	 *
-	 * @author Javier Marquez (javi@arqex.com)
-	 * @version 0.1
-	 * 	 
-	 * @class centerer
-	 * @name jQueryCenterer
-	 * @chainable 
-	 * @param  {Object} options Initialization parameters for jQuery centerer.
-	 * @return {jQuery}         
-	 */
+    
 	$.fn.centerer = function(options){
 		var settings = $.extend({
 			/**
@@ -64,9 +49,14 @@
 		var centering = function($me, $img){
 			var dim = {width: $me.width(),	height: $me.height()}
 			$img.css({width:'auto', height: 'auto'}); //Just one image, original size.
+			$img.dim = {width: $img.width(), height: $img.height()};
+			//No img size, retry
+			if(!settings.resizeSupport && ($img.dim.width == 0 || $img.height == 0))
+				return setTimeout(function(){
+					centering($me, $img);
+				}, 300);
 			if(settings.resizeType != 'noresize'){ // A resizing is maybe needed
 				var pivot, diff;
-				$img.dim = {width: $img.width(), height: $img.height()};
 				diff = {
 					width: dim.width - $img.dim.width,
 					height: dim.height - $img.dim.height
